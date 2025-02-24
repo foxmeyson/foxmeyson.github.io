@@ -14,6 +14,10 @@ sidebar:
     {%- include functions.html func='get_value' -%}
     {%- assign banner = return -%}
 
+    {%- if page.layout == "post" and banner != "needed" -%}
+    {%- assign banner = nil -%}
+    {%- endif -%}
+
     {%- assign name = 'hidden' -%}
     {%- include functions.html func='get_value' -%}
     {%- assign hidden = return -%}
