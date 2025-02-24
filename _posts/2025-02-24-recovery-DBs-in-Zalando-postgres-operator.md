@@ -2,7 +2,7 @@
 layout: post
 title: Recovery DB in Zalando postgres operator in Kubernetes from S3
 subtitle: It was born out of my issue on github about Recovery DB in Zalando
-excerpt_image: /assets/images/posts/zalando-postgres-operator-restore-DBs/zalando-posgres-operator.webp
+excerpt_image: /assets/images/posts/zalando-postgres-operator-restore-DBs/zalando-posgres-operator-banner.webp
 categories: Kubernetes
 tags: [Kubernetes, PostgreSQL, Helm, S3]
 top: 1
