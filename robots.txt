@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://foxmeyson.github.io/sitemap.xml
