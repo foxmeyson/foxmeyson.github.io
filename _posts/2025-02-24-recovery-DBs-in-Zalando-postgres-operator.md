@@ -16,7 +16,7 @@ This guide is the result of my research, hands-on experience, and an issue I rai
 
 If you’re facing a similar issue, this article should help you navigate the recovery process efficiently. Let’s dive in. 🚀
 
-#### 1) Do not touch bucket with WAL old cluster.
+#### Do not touch bucket with WAL old cluster
 
 Whatch in configmap current directory for WAL:
 
@@ -34,7 +34,7 @@ items:
     ...
 ```
 
-#### 2) Create new directory for WAL in storage
+#### Create new directory for WAL in storage
 In S3 provider for you account in buscket create **new** directory for **new** WAL.
 
 ```
@@ -43,7 +43,7 @@ You need create directory **WAL_NEW_CLUSTER**
 
 ![image](/assets/images/posts/zalando-postgres-operator-restore-DBs/zalando-posgres-operator-sheme.png)
 
-#### 3) Editing configmap
+#### Editing configmap
 
 ```bash
 cd ~/git/deploy-zalando-operator/
@@ -60,13 +60,13 @@ WALG_S3_PREFIX: s3://bucket/wal_for_NEW <============ became
 CLONE_USE_WALG_RESTORE: "true" <============ became
 ```
 
-#### 4) Apply configmap in K8s
+#### Apply configmap in K8s
 
 ```bash
 k apply -n $NAMESPACE  -f ~/git/deploy-zalando-operator/pg-pod-configmap.yaml
 ```
 
-#### 5) Editing manifest cluster
+#### Editing manifest cluster
 
 ```bash
 cd ~/git/deploy-zalando-operator/
@@ -86,14 +86,15 @@ add section:
     timestamp: "2021-01-21T23:49:03+03:00" # timezone required (offset relative to UTC, see RFC 3339 section 5.6)
 ```
 
-#### 6) Check and apply cluster manifest in K8s
+#### Check and apply cluster manifest in K8s
 
 ```bash
 k apply -n $NAMESPACE -f ~/git/deploy-zalando-operator/zalando-cluster.yaml --server-dry-run
 k apply -n $NAMESPACE -f ~/git/deploy-zalando-operator/zalando-cluster.yaml
 ```
 
-#### 7) Log pattern (cluster can take a long time to up (up to 10 minutes on the test, it may depend on the size of the base):
+#### Log pattern 
+Cluster can take a long time to up (up to 10 minutes on the test, it may depend on the size of the base):
 
 ```bash
 k logs -n $NAMESPACE pg-pod-*** -f (only leader)
@@ -181,13 +182,13 @@ INFO: 2021/03/05 01:35:10.928696 Starting part 4 ...
 2021-03-05 01:35:12,395 INFO: no action.  i am the leader with the lock
 ```
 
-#### 8) Replace credentials for BD in K8S
+#### Replace credentials for BD in K8S
 
 ```bash
 kubectl get secret root.old-cluster-name.credentials.postgresql.acid.zalan.do -n $NAMESPACE --export -o yaml | kubectl replace -n $NAMESPACE -f -
 ```
 
-#### 9) Delete section "clone" in cluster manifest in K8s
+#### Delete section "clone" in cluster manifest in K8s
 
 ```bash
 k edit -n $NAMESPACE postgresqls.acid.zalan.do
@@ -201,18 +202,19 @@ k edit -n $NAMESPACE postgresqls.acid.zalan.do
 #    timestamp: "2021-01-21T23:49:03+03:00" # timezone required (offset relative to UTC, see RFC 3339 section 5.6)
 ```
 
-#### 10) "Restart" all pods in namespace with apps (This is necessary in order for the pods to re-read the secrets of the base, without deleting the pods at the moment this mechanism does not work in Kubernetes, understand what you are doing. )
+#### "Restart" all pods in namespace with apps 
+This is necessary in order for the pods to re-read the secrets of the base, without deleting the pods at the moment this mechanism does not work in Kubernetes, understand what you are doing.
 
 ```bash
 kubectl delete --all pods --namespace=$NAMESPACE
 ```
 
-#### 11) Done. You are amazing =)
+#### Done.
 
-# Plan to recovery from SQL backup. This variant recovery is possible only in a newly deployed cluster (Variant for whisout redeploy cluster is below). Do not use for recovery in existing cluster! You need SQL backup for recovery DB:
+Plan to recovery from SQL backup. This variant recovery is possible only in a newly deployed cluster (Variant for whisout redeploy cluster is below). Do not use for recovery in existing cluster! You need SQL backup for recovery DB:
 
 
-# Important briefly
+#### Important briefly
 
 **uid cluster for operator**  = **K8s uid** from manifest postgres operator, you can find this field in the metadata of the source cluster:
 ```bash
@@ -254,7 +256,7 @@ annotations:
 ```
 In this section we see current status cluster.
 
-# Documentation (links) that can help:
+#### Documentation (links) that can help:
 
 https://postgres-operator.readthedocs.io/en/latest/reference/cluster_manifest/
 
@@ -270,7 +272,7 @@ https://github.com/zalando/postgres-operator/issues/1279#issuecomment-783574620
 
 https://github.com/zalando/postgres-operator/issues/1391
 
-# !!! Dangerous zone !!!
+#### !!! Dangerous zone !!!
 > Be very confident in what you are doing, ask senior DevOps. Any responsibility for using these commands rests with you. See Denial of responsibility
 
 ```bash

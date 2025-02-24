@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2025-02-24T22:06:13+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Evgenii Zhuravlev - DevOps Engineer</title><subtitle>Personal blog about DevOps, Kubernetes, Linux, Clouds infrastructures, CI/CD, Terraform, Ansible, and other.</subtitle><author><name>Evgenii Zhuravlev</name></author><entry><title type="html">Recovery DB in Zalando postgres operator in Kubernetes from S3</title><link href="http://localhost:4000/kubernetes/recovery-DBs-in-Zalando-postgres-operator/" rel="alternate" type="text/html" title="Recovery DB in Zalando postgres operator in Kubernetes from S3" /><published>2025-02-24T00:00:00+01:00</published><updated>2025-02-24T00:00:00+01:00</updated><id>http://localhost:4000/kubernetes/recovery-DBs-in-Zalando-postgres-operator</id><content type="html" xml:base="http://localhost:4000/kubernetes/recovery-DBs-in-Zalando-postgres-operator/"><![CDATA[<p><img src="/assets/images/posts/zalando-postgres-operator-restore-DBs/zalando-posgres-operator-banner.webp" alt="banner" /></p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2025-02-24T22:10:13+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Evgenii Zhuravlev - DevOps Engineer</title><subtitle>Personal blog about DevOps, Kubernetes, Linux, Clouds infrastructures, CI/CD, Terraform, Ansible, and other.</subtitle><author><name>Evgenii Zhuravlev</name></author><entry><title type="html">Recovery DB in Zalando postgres operator in Kubernetes from S3</title><link href="http://localhost:4000/kubernetes/recovery-DBs-in-Zalando-postgres-operator/" rel="alternate" type="text/html" title="Recovery DB in Zalando postgres operator in Kubernetes from S3" /><published>2025-02-24T00:00:00+01:00</published><updated>2025-02-24T00:00:00+01:00</updated><id>http://localhost:4000/kubernetes/recovery-DBs-in-Zalando-postgres-operator</id><content type="html" xml:base="http://localhost:4000/kubernetes/recovery-DBs-in-Zalando-postgres-operator/"><![CDATA[<p><img src="/assets/images/posts/zalando-postgres-operator-restore-DBs/zalando-posgres-operator-banner.webp" alt="banner" /></p>
 
 <p>While working with the Zalando Postgres Operator in Kubernetes, I encountered a significant challenge: there is no well-documented, out-of-the-box method for restoring a database from an S3 backup. The operator itself is a great tool that simplifies PostgreSQL deployment and management in Kubernetes, but when it comes to recovery, the process is not as straightforward as one might expect.</p>
 
@@ -6,7 +6,7 @@
 
 <p>If you’re facing a similar issue, this article should help you navigate the recovery process efficiently. Let’s dive in. 🚀</p>
 
-<h4 id="1-do-not-touch-bucket-with-wal-old-cluster">1) Do not touch bucket with WAL old cluster.</h4>
+<h4 id="do-not-touch-bucket-with-wal-old-cluster">Do not touch bucket with WAL old cluster</h4>
 
 <p>Whatch in configmap current directory for WAL:</p>
 
@@ -23,7 +23,7 @@ items:
     ...
 </code></pre></div></div>
 
-<h4 id="2-create-new-directory-for-wal-in-storage">2) Create new directory for WAL in storage</h4>
+<h4 id="create-new-directory-for-wal-in-storage">Create new directory for WAL in storage</h4>
 <p>In S3 provider for you account in buscket create <strong>new</strong> directory for <strong>new</strong> WAL.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>You need create directory **WAL_NEW_CLUSTER**
@@ -31,7 +31,7 @@ items:
 
 <p><img src="/assets/images/posts/zalando-postgres-operator-restore-DBs/zalando-posgres-operator-sheme.png" alt="image" /></p>
 
-<h4 id="3-editing-configmap">3) Editing configmap</h4>
+<h4 id="editing-configmap">Editing configmap</h4>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/git/deploy-zalando-operator/
 git pull
@@ -46,12 +46,12 @@ WALG_S3_PREFIX: s3://bucket/wal_for_NEW &lt;<span class="o">============</span> 
 CLONE_USE_WALG_RESTORE: <span class="s2">"true"</span> &lt;<span class="o">============</span> became
 </code></pre></div></div>
 
-<h4 id="4-apply-configmap-in-k8s">4) Apply configmap in K8s</h4>
+<h4 id="apply-configmap-in-k8s">Apply configmap in K8s</h4>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>k apply <span class="nt">-n</span> <span class="nv">$NAMESPACE</span>  <span class="nt">-f</span> ~/git/deploy-zalando-operator/pg-pod-configmap.yaml
 </code></pre></div></div>
 
-<h4 id="5-editing-manifest-cluster">5) Editing manifest cluster</h4>
+<h4 id="editing-manifest-cluster">Editing manifest cluster</h4>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> ~/git/deploy-zalando-operator/
 git pull
@@ -69,13 +69,14 @@ vim zalando-cluster.yaml
     timestamp: <span class="s2">"2021-01-21T23:49:03+03:00"</span> <span class="c"># timezone required (offset relative to UTC, see RFC 3339 section 5.6)</span>
 </code></pre></div></div>
 
-<h4 id="6-check-and-apply-cluster-manifest-in-k8s">6) Check and apply cluster manifest in K8s</h4>
+<h4 id="check-and-apply-cluster-manifest-in-k8s">Check and apply cluster manifest in K8s</h4>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>k apply <span class="nt">-n</span> <span class="nv">$NAMESPACE</span> <span class="nt">-f</span> ~/git/deploy-zalando-operator/zalando-cluster.yaml <span class="nt">--server-dry-run</span>
 k apply <span class="nt">-n</span> <span class="nv">$NAMESPACE</span> <span class="nt">-f</span> ~/git/deploy-zalando-operator/zalando-cluster.yaml
 </code></pre></div></div>
 
-<h4 id="7-log-pattern-cluster-can-take-a-long-time-to-up-up-to-10-minutes-on-the-test-it-may-depend-on-the-size-of-the-base">7) Log pattern (cluster can take a long time to up (up to 10 minutes on the test, it may depend on the size of the base):</h4>
+<h4 id="log-pattern">Log pattern</h4>
+<p>Cluster can take a long time to up (up to 10 minutes on the test, it may depend on the size of the base):</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>k logs <span class="nt">-n</span> <span class="nv">$NAMESPACE</span> pg-pod-<span class="k">***</span> <span class="nt">-f</span> <span class="o">(</span>only leader<span class="o">)</span>
 ...
@@ -162,12 +163,12 @@ INFO: 2021/03/05 01:35:10.928696 Starting part 4 ...
 2021-03-05 01:35:12,395 INFO: no action.  i am the leader with the lock
 </span></code></pre></div></div>
 
-<h4 id="8-replace-credentials-for-bd-in-k8s">8) Replace credentials for BD in K8S</h4>
+<h4 id="replace-credentials-for-bd-in-k8s">Replace credentials for BD in K8S</h4>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl get secret root.old-cluster-name.credentials.postgresql.acid.zalan.do <span class="nt">-n</span> <span class="nv">$NAMESPACE</span> <span class="nt">--export</span> <span class="nt">-o</span> yaml | kubectl replace <span class="nt">-n</span> <span class="nv">$NAMESPACE</span> <span class="nt">-f</span> -
 </code></pre></div></div>
 
-<h4 id="9-delete-section-clone-in-cluster-manifest-in-k8s">9) Delete section “clone” in cluster manifest in K8s</h4>
+<h4 id="delete-section-clone-in-cluster-manifest-in-k8s">Delete section “clone” in cluster manifest in K8s</h4>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>k edit <span class="nt">-n</span> <span class="nv">$NAMESPACE</span> postgresqls.acid.zalan.do
 <span class="nt">---</span>
@@ -180,16 +181,17 @@ INFO: 2021/03/05 01:35:10.928696 Starting part 4 ...
 <span class="c">#    timestamp: "2021-01-21T23:49:03+03:00" # timezone required (offset relative to UTC, see RFC 3339 section 5.6)</span>
 </code></pre></div></div>
 
-<h4 id="10-restart-all-pods-in-namespace-with-apps-this-is-necessary-in-order-for-the-pods-to-re-read-the-secrets-of-the-base-without-deleting-the-pods-at-the-moment-this-mechanism-does-not-work-in-kubernetes-understand-what-you-are-doing-">10) “Restart” all pods in namespace with apps (This is necessary in order for the pods to re-read the secrets of the base, without deleting the pods at the moment this mechanism does not work in Kubernetes, understand what you are doing. )</h4>
+<h4 id="restart-all-pods-in-namespace-with-apps">“Restart” all pods in namespace with apps</h4>
+<p>This is necessary in order for the pods to re-read the secrets of the base, without deleting the pods at the moment this mechanism does not work in Kubernetes, understand what you are doing.</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl delete <span class="nt">--all</span> pods <span class="nt">--namespace</span><span class="o">=</span><span class="nv">$NAMESPACE</span>
 </code></pre></div></div>
 
-<h4 id="11-done-you-are-amazing-">11) Done. You are amazing =)</h4>
+<h4 id="done">Done.</h4>
 
-<h1 id="plan-to-recovery-from-sql-backup-this-variant-recovery-is-possible-only-in-a-newly-deployed-cluster-variant-for-whisout-redeploy-cluster-is-below-do-not-use-for-recovery-in-existing-cluster-you-need-sql-backup-for-recovery-db">Plan to recovery from SQL backup. This variant recovery is possible only in a newly deployed cluster (Variant for whisout redeploy cluster is below). Do not use for recovery in existing cluster! You need SQL backup for recovery DB:</h1>
+<p>Plan to recovery from SQL backup. This variant recovery is possible only in a newly deployed cluster (Variant for whisout redeploy cluster is below). Do not use for recovery in existing cluster! You need SQL backup for recovery DB:</p>
 
-<h1 id="important-briefly">Important briefly</h1>
+<h4 id="important-briefly">Important briefly</h4>
 
 <p><strong>uid cluster for operator</strong>  = <strong>K8s uid</strong> from manifest postgres operator, you can find this field in the metadata of the source cluster:</p>
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kg <span class="nt">-n</span> <span class="nv">$NAMESPACE</span> postgresqls.acid.zalan.do <span class="nt">-o</span> yaml
@@ -227,7 +229,7 @@ metadata:
 </code></pre></div></div>
 <p>In this section we see current status cluster.</p>
 
-<h1 id="documentation-links-that-can-help">Documentation (links) that can help:</h1>
+<h4 id="documentation-links-that-can-help">Documentation (links) that can help:</h4>
 
 <p>https://postgres-operator.readthedocs.io/en/latest/reference/cluster_manifest/</p>
 
@@ -243,7 +245,7 @@ metadata:
 
 <p>https://github.com/zalando/postgres-operator/issues/1391</p>
 
-<h1 id="-dangerous-zone-">!!! Dangerous zone !!!</h1>
+<h4 id="-dangerous-zone-">!!! Dangerous zone !!!</h4>
 <blockquote>
   <p>Be very confident in what you are doing, ask senior DevOps. Any responsibility for using these commands rests with you. See Denial of responsibility</p>
 </blockquote>
