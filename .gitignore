@@ -1,2 +1,30 @@
 .DS_Store
 **/.DS_Store
+
+# Jekyll:
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# Логи и временные файлы
+*.log
+*.tmp
+*.swp
+*.swo
+
+# Ignoring OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.bak
+*.backup
+
+# Игнорируем установленные зависимости Bundler
+vendor/
+.bundle/
+Gemfile.lock
+
+# Игнорируем файлы CI/CD
+.github/workflows/*.log
