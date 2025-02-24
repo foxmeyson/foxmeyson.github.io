@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2025-02-24T22:10:13+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Evgenii Zhuravlev - DevOps Engineer</title><subtitle>Personal blog about DevOps, Kubernetes, Linux, Clouds infrastructures, CI/CD, Terraform, Ansible, and other.</subtitle><author><name>Evgenii Zhuravlev</name></author><entry><title type="html">Recovery DB in Zalando postgres operator in Kubernetes from S3</title><link href="http://localhost:4000/kubernetes/recovery-DBs-in-Zalando-postgres-operator/" rel="alternate" type="text/html" title="Recovery DB in Zalando postgres operator in Kubernetes from S3" /><published>2025-02-24T00:00:00+01:00</published><updated>2025-02-24T00:00:00+01:00</updated><id>http://localhost:4000/kubernetes/recovery-DBs-in-Zalando-postgres-operator</id><content type="html" xml:base="http://localhost:4000/kubernetes/recovery-DBs-in-Zalando-postgres-operator/"><![CDATA[<p><img src="/assets/images/posts/zalando-postgres-operator-restore-DBs/zalando-posgres-operator-banner.webp" alt="banner" /></p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2025-02-24T22:12:20+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Evgenii Zhuravlev - DevOps Engineer</title><subtitle>Personal blog about DevOps, Kubernetes, Linux, Clouds infrastructures, CI/CD, Terraform, Ansible, and other.</subtitle><author><name>Evgenii Zhuravlev</name></author><entry><title type="html">Recovery DB in Zalando postgres operator in Kubernetes from S3</title><link href="http://localhost:4000/kubernetes/recovery-DBs-in-Zalando-postgres-operator/" rel="alternate" type="text/html" title="Recovery DB in Zalando postgres operator in Kubernetes from S3" /><published>2025-02-24T00:00:00+01:00</published><updated>2025-02-24T00:00:00+01:00</updated><id>http://localhost:4000/kubernetes/recovery-DBs-in-Zalando-postgres-operator</id><content type="html" xml:base="http://localhost:4000/kubernetes/recovery-DBs-in-Zalando-postgres-operator/"><![CDATA[<p><img src="/assets/images/posts/zalando-postgres-operator-restore-DBs/zalando-posgres-operator-banner.webp" alt="banner" /></p>
 
 <p>While working with the Zalando Postgres Operator in Kubernetes, I encountered a significant challenge: there is no well-documented, out-of-the-box method for restoring a database from an S3 backup. The operator itself is a great tool that simplifies PostgreSQL deployment and management in Kubernetes, but when it comes to recovery, the process is not as straightforward as one might expect.</p>
 
@@ -187,7 +187,7 @@ INFO: 2021/03/05 01:35:10.928696 Starting part 4 ...
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl delete <span class="nt">--all</span> pods <span class="nt">--namespace</span><span class="o">=</span><span class="nv">$NAMESPACE</span>
 </code></pre></div></div>
 
-<h4 id="done">Done.</h4>
+<h4 id="done">Done</h4>
 
 <p>Plan to recovery from SQL backup. This variant recovery is possible only in a newly deployed cluster (Variant for whisout redeploy cluster is below). Do not use for recovery in existing cluster! You need SQL backup for recovery DB:</p>
 
@@ -229,23 +229,19 @@ metadata:
 </code></pre></div></div>
 <p>In this section we see current status cluster.</p>
 
-<h4 id="documentation-links-that-can-help">Documentation (links) that can help:</h4>
+<h4 id="documentation-links-that-can-help">Documentation (links) that can help</h4>
 
-<p>https://postgres-operator.readthedocs.io/en/latest/reference/cluster_manifest/</p>
+<ul>
+  <li><a href="https://postgres-operator.readthedocs.io/en/latest/reference/cluster_manifest/">Cluster Manifest</a></li>
+  <li><a href="https://github.com/zalando/postgres-operator">Zalando Postgres Operator</a></li>
+  <li><a href="https://patroni.readthedocs.io/en/latest/">Patroni Docs</a></li>
+  <li><a href="https://patroni.readthedocs.io/en/latest/kubernetes.html">Patroni Kubernetes</a></li>
+  <li><a href="https://postgres-operator.readthedocs.io/en/latest/user/#clone-from-s3">Cloning from S3</a></li>
+  <li><a href="https://github.com/zalando/postgres-operator/issues/1279#issuecomment-783574620">GitHub Issue 1279</a></li>
+  <li><a href="https://github.com/zalando/postgres-operator/issues/1391">GitHub Issue 1391</a></li>
+</ul>
 
-<p>https://github.com/zalando/postgres-operator</p>
-
-<p>https://patroni.readthedocs.io/en/latest/</p>
-
-<p>https://patroni.readthedocs.io/en/latest/kubernetes.html</p>
-
-<p>https://postgres-operator.readthedocs.io/en/latest/user/#clone-from-s3</p>
-
-<p>https://github.com/zalando/postgres-operator/issues/1279#issuecomment-783574620</p>
-
-<p>https://github.com/zalando/postgres-operator/issues/1391</p>
-
-<h4 id="-dangerous-zone-">!!! Dangerous zone !!!</h4>
+<h4 id="️-dangerous-zone-️">⚠️ Dangerous Zone ⚠️</h4>
 <blockquote>
   <p>Be very confident in what you are doing, ask senior DevOps. Any responsibility for using these commands rests with you. See Denial of responsibility</p>
 </blockquote>

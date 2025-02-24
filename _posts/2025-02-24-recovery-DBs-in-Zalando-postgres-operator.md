@@ -209,7 +209,7 @@ This is necessary in order for the pods to re-read the secrets of the base, with
 kubectl delete --all pods --namespace=$NAMESPACE
 ```
 
-#### Done.
+#### Done
 
 Plan to recovery from SQL backup. This variant recovery is possible only in a newly deployed cluster (Variant for whisout redeploy cluster is below). Do not use for recovery in existing cluster! You need SQL backup for recovery DB:
 
@@ -256,23 +256,17 @@ annotations:
 ```
 In this section we see current status cluster.
 
-#### Documentation (links) that can help:
+#### Documentation (links) that can help
 
-https://postgres-operator.readthedocs.io/en/latest/reference/cluster_manifest/
+- [Cluster Manifest](https://postgres-operator.readthedocs.io/en/latest/reference/cluster_manifest/)
+- [Zalando Postgres Operator](https://github.com/zalando/postgres-operator)
+- [Patroni Docs](https://patroni.readthedocs.io/en/latest/)
+- [Patroni Kubernetes](https://patroni.readthedocs.io/en/latest/kubernetes.html)
+- [Cloning from S3](https://postgres-operator.readthedocs.io/en/latest/user/#clone-from-s3)
+- [GitHub Issue 1279](https://github.com/zalando/postgres-operator/issues/1279#issuecomment-783574620)
+- [GitHub Issue 1391](https://github.com/zalando/postgres-operator/issues/1391)
 
-https://github.com/zalando/postgres-operator
-
-https://patroni.readthedocs.io/en/latest/
-
-https://patroni.readthedocs.io/en/latest/kubernetes.html
-
-https://postgres-operator.readthedocs.io/en/latest/user/#clone-from-s3
-
-https://github.com/zalando/postgres-operator/issues/1279#issuecomment-783574620
-
-https://github.com/zalando/postgres-operator/issues/1391
-
-#### !!! Dangerous zone !!!
+#### ⚠️ Dangerous Zone ⚠️
 > Be very confident in what you are doing, ask senior DevOps. Any responsibility for using these commands rests with you. See Denial of responsibility
 
 ```bash
