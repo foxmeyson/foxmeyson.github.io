@@ -48,8 +48,21 @@ sidebar:
     <div class="post-related">
       <div>Related Articles</div>
       <ul>
-        {% assign posts = site[page.collection] | sample:4 %}
-        {%- for post in posts -%}
+        {% assign posts = site.posts | where_exp: "post", "post.url != page.url" %}
+        {% assign related_posts = "" | split: "" %}
+    
+        {% for post in posts %}
+          {% for tag in post.tags %}
+            {% if page.tags contains tag %}
+              {% assign related_posts = related_posts | push: post %}
+              {% break %}
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+    
+        {% assign related_posts = related_posts | sample: 4 %}
+    
+        {%- for post in related_posts -%}
           {%- assign post_item_class = "" -%}
           {%- if post.top -%}
             {%- assign post_item_class = "top-post" -%}
