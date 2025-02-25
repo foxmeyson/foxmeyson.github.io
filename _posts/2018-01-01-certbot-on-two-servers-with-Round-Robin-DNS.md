@@ -5,7 +5,6 @@ subtitle: Confirming the ssl certificate for a website that runs on several diff
 excerpt_image: /assets/images/posts/certbot-Round-Robin-dns/scheme.png
 categories: Linux
 tags: [Linux, Certbot, SSL]
-top: 5
 ---
 
 ![banner](/assets/images/posts/certbot-Round-Robin-dns/scheme.png)
