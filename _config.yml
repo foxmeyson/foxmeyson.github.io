@@ -15,7 +15,7 @@ include:
 title: "Evgenii Zhuravlev - DevOps Engineer"
 email: itlimited.supp@gmail.com
 author: Evgenii Zhuravlev
-permalink: /:categories/:title/
+# permalink: /:categories/:title/
 
 seo_keywords: "DevOps, Kubernetes, Linux, Cloud, AWS, Azure, CI/CD Terraform, Ansible, GitLab, CI/CD"
 
@@ -59,7 +59,7 @@ content_width: "1200px"
 # enableDNT: "false"
 
 # If you want to generate website sitemap, you can set true
-# sitemap: false
+sitemap: false
 
 # If you want to change site language, you can set lang option
 lang: "en"  # default lang is en
@@ -226,7 +226,8 @@ header_pages:
 #   follow_site_theme: true
 
 # Build settings
-# highlighter: none
+highlighter: rouge
+
 markdown: kramdown
 kramdown:
   input: GFM
