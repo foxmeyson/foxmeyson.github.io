@@ -3,7 +3,8 @@
 
   {%- include head.html -%}
 
-  <body>
+  <body class="{% if page.url == "/" %}home{% endif %}">
+  <!-- <body> -->
 
     {%- include views/header.html -%}
 

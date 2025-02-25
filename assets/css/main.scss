@@ -53,3 +53,23 @@ $selection-background-color: unquote("{{ site.selection.background_color }}");
 }
 
 @import "yat";
+
+/* Уменьшаем баннер только на главной */
+body.home .page-banner {
+  height: 50px; /* Уменьшаем высоту */
+  padding: 20px 0;
+}
+
+/* Уменьшаем картинку внутри баннера */
+body.home .page-banner-img {
+  height: 50px;
+}
+
+/* Уменьшаем текст в баннере */
+body.home .page-banner-heading {
+  font-size: 24px;
+}
+
+body.home .page-banner-subheading {
+  font-size: 16px;
+}

@@ -34,8 +34,8 @@ description: >- # this means to ignore newlines until "baseurl:"
   Personal blog about DevOps, Kubernetes, Linux, Clouds infrastructures, CI/CD, Terraform, Ansible, and other.
 
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. https://example.com
-favicon: "" # the favicon for your site
+url: "https://foxmeyson.github.io" # the base hostname & protocol for your site, e.g. https://example.com
+favicon: "/assets/images/favicons/favicon.ico" # the favicon for your site
 
 # Yat date format
 # refer to https://shopify.github.io/liquid/filters/date/ if you want to customize this
@@ -138,12 +138,11 @@ night_mode: "on/off"
 
 # If you want to link only specific pages in your header, uncomment
 # this and add the path to the pages in order as they should show up
-# header_pages:
-#   - index.html
-#   - archives.html
-#   - categories.html
-#   - tags.html
-#   - about.md
+header_pages:
+  - about.html
+  - archives.html
+  - categories.html
+  - tags.html
 
 # Page default value
 # defaults:
