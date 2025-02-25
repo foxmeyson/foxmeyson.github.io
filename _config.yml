@@ -9,6 +9,9 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
+include:
+  - "404.html"
+
 title: "Evgenii Zhuravlev - DevOps Engineer"
 email: itlimited.supp@gmail.com
 author: Evgenii Zhuravlev
