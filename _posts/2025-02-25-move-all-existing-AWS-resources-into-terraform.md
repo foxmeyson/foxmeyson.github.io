@@ -1,7 +1,7 @@
 ---
 layout: post
-title: How to import existing AWS resources into Terraform
-subtitle: Creating all terraform files and structures for AWS. From manual create to IaC. 
+title: How to import all existing AWS resources into Terraform
+subtitle: Creating all terraform files and structures for AWS. Step-by-step guide. 
 excerpt_image: /assets/images/posts/move-resources-into-terraform/terraform-gif.gif
 categories: Terraform
 tags: [Terraform, AWS, Cloud, S3]
