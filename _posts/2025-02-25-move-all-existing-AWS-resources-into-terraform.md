@@ -125,7 +125,18 @@ terraform {
 
 Now, you have all you resources that you created in AWS both manually in directory `{generated}/{provider}/`! Super!
 
-![screenshot transfer catalog](/assets/images/posts/move-resources-into-terraform/scren-clean-transfer-catalog.png)
+```bash
+.
+..
+acm
+alb
+auto_scaling
+cloudformation
+cloudfront
+cloudwatch
+cognito
+...
+```
 
 Please note that all files `{generated}/{provider}/{service}/terraform.tfstate` containsuch a header:
 
