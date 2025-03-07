@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Creating modular CI/CD pipelines with Gitlab Tags management
+title: Flexible CI/CD pipelines in GitLab. Version control and deployment in different environments using tags.
 excerpt_image: /assets/images/posts/simple-ci-cd/ci-cd.gif
 categories: Gitlab
 tags: [Gitlab, CI, CD]
