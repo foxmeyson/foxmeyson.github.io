@@ -8,7 +8,7 @@ tags: [Kubernetes, Vault]
 
 ![banner](assets/images/posts/vault-in-EKS/vault-loader-dark.gif)
 
-In this post, I'll show you how to deploy Vault in EKS/K8s (there are some minor differences, but the workflow is very similar) and use DynamoDB as a backend, as well as how to inject secrets directly into a pod without using K8s Secrets (more details: [Vault Agent Injector](https://developer.hashicorp.com/vault/docs/platform/k8s/injector))
+In this post, I'll show you how to deploy Vault in EKS/K8s (there are some minor differences, but the workflow is very similar) and use DynamoDB as a backend, as well as how to inject secrets directly into a pod without using K8s Secrets (more details: [Vault Agent Injector](https://developer.hashicorp.com/vault/docs/platform/k8s/injector)). And then I'll tell you how to use it to inject secrets into the Gitlab pipeline.
 
 So, the moment has come, you've decided on a secret storage solution and chosen Hashicorp Vault. This is a good choice (at the very least, it's cheaper than AWS Secrets Manager 😊). The next step is to determine which backend to use for Hashicorp Vault.
 Whichever backend you choose, keep in mind that it may or may not have HA properties (don't confuse this with Vault's own HA - a separate feature that allows it to create a cluster across multiple nodes).
