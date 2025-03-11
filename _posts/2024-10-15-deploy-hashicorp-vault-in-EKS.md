@@ -1,12 +1,12 @@
 ---
 layout: post
 title: Injecting secrets directly into Pods and Gitlab from Hashicorp Vault in EKS/K8s.
-excerpt_image: assets/images/posts/vault-in-EKS/vault-loader-dark.gif
+excerpt_image: /assets/images/posts/vault-in-EKS/vault-loader-dark.gif
 categories: Kubernetes
 tags: [Kubernetes, Vault]
 ---
 
-![banner](assets/images/posts/vault-in-EKS/vault-loader-dark.gif)
+![banner](/assets/images/posts/vault-in-EKS/vault-loader-dark.gif)
 
 In this post, I'll show you how to deploy Vault in EKS/K8s (there are some minor differences, but the workflow is very similar) and use DynamoDB as a backend, as well as how to inject secrets directly into a pod without using K8s Secrets (more details: [Vault Agent Injector](https://developer.hashicorp.com/vault/docs/platform/k8s/injector)). And then I'll tell you how to use it to inject secrets into the Gitlab pipeline.
 
