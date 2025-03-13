@@ -524,7 +524,7 @@ cat response.json
 
 ### 6. The main causes of inactivity and their solutions
 
-**EventBridge does not have Lambda as a target**
+EventBridge does not have Lambda as a target
 
 ```bash
 aws events put-targets \
@@ -532,7 +532,7 @@ aws events put-targets \
     --targets '[{"Id": "1", "Arn": "arn:aws:lambda:'${REGION}':'${ACCOUNT_ID}':function:ec2-auto-tagging"}]'
 ```
 
-**Lambda does not have permission to receive events from EventBridge**
+Lambda does not have permission to receive events from EventBridge
 
 ```bash
 aws lambda add-permission \
@@ -543,13 +543,13 @@ aws lambda add-permission \
     --source-arn arn:aws:events:${REGION}:${ACCOUNT_ID}:rule/trigger-on-ec2-instance-creation
 ```
 
-**CloudTrail is not configured or enabled**
+CloudTrail is not configured or enabled
 
 ```bash
 aws cloudtrail start-logging --name api-events-trail
 ```
 
-**The Lambda function shuts down too quickly, without waiting for the tags to become available.**
+The Lambda function shuts down too quickly, without waiting for the tags to become available.
 
 ```bash
 aws lambda update-function-configuration \
