@@ -393,7 +393,7 @@ done
 TOTAL_INSTANCES=0
 
 for CLUSTER_NAME in "${CLUSTER_NAMES[@]}"; do
-    NAME_TAG_VALUE="EKS_${CLUSTER_NAME}"
+    NAME_TAG_VALUE="EKS-${CLUSTER_NAME}"
     
     echo "========================================"
     echo "Processing cluster: ${CLUSTER_NAME}"
