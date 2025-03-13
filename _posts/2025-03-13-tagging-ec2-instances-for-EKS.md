@@ -12,7 +12,7 @@ tags: [AWS, EKS, ec2]
 I recently came across an interesting task. For cost management, it was necessary to integrate all ec2 instances on the AWS account. The tag should contain `Name = EKS-$CLUSTER-NAME`.
 As you know, ec2 clusters created for EKS do not have the `Name` tag by default, they are created within the Node Group from a custom Launch Template (if you explicitly specified and created it). Or they are created with an AWS managed Launch Template that controls ec2 in your Node Group, unless you explicitly specified otherwise.
 With the first case, when you have a custom Launch Template, everything is clear, you can simply add custom tags to it, and get ec2 instances with `Name = EKS-$CLUSTER-NAME` at the output. But what if some of the Node Group EKS are not managed through a separate Launch Template?
-By default, AWS does not have a property that allows you to create an tag for an EKS node and link it to ec2. As a result, when listing ec2 in your account, you can see a huge number of instances without a name, which will only have service tags that EKS uses to manage ec2. One of them is: `kubernetes.io/cluster /$CLUSTER-NAME = owned`, let's try to use it.
+By default, AWS does not have a property that allows you to create an tag for an EKS node and link it to ec2. As a result, when listing ec2 in your account, you can see a huge number of instances without a name, which will only have service tags that EKS uses to manage ec2. One of them is: `kubernetes.io/cluster/$CLUSTER-NAME = owned`, let's try to use it.
 I used this tag to assign a custom tag `Name = EKS-$CLUSTER-NAME` for new ec2 instances at the time of their creation, using AWS Lambda and events from EventBridge for this purpose.
 
 ## Step 1. Prepare the IAM policy and the IAM role
